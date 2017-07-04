@@ -8,7 +8,7 @@ import { Header, Button, Icon, Modal, Image, Form, TextArea, Input } from 'seman
 export default class AddPostButton extends Component {
   constructor(props) {
     super(props);
-    this.state = { open: false, showLogin: false, title: '', post: '', channels: '' }
+    this.state = { open: false, title: '', post: '', channels: '' }
     this.close = this.close.bind(this)
     this.show = this.show.bind(this)
     this.post = this.post.bind(this)
@@ -34,6 +34,7 @@ export default class AddPostButton extends Component {
   }
 
   show() {
+    // show new post dialog only if user is logged in
     if (this.props.user) {
       this.setState({ open: true })
     } else {

@@ -19,7 +19,7 @@ export default class PostPage extends Component {
         </div>
         )
     } else {
-      output = <h1>loading</h1>
+      output = <h1>Loading...</h1>
     }
 
     return (
