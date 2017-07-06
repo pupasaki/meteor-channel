@@ -2,7 +2,6 @@ import { connect } from 'react-redux'
 import { newPostClicked } from '../actions'
 import LoginProfileButton from '../components/LoginProfileButton'
 
-
 const mapStateToProps = (state) => {
   return {
     externalOpenClick: state.clicks.new_post_clicked

@@ -12,7 +12,7 @@ export default class Feed extends Component {
       <div className="feed">
         {
         this.props.posts.map( post => (
-        <FeedItem key={post._id} post={post} />
+        <FeedItem key={post._id} post={post} user={this.props.user} />
         ))
         }
       </div>
@@ -22,4 +22,5 @@ export default class Feed extends Component {
 
 Feed.propTypes = {
   posts: PropTypes.array.isRequired,
+  user: PropTypes.object,
 };

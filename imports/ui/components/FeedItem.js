@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import TagList from './TagList'
+import VoteControlContainer from './VoteControlContainer'
 
 export default class FeedItem extends Component {
   goToPost(id) {
@@ -11,6 +12,7 @@ export default class FeedItem extends Component {
     var post = this.props.post
     return (
       <div className="feedItem">
+        <VoteControlContainer post={post} user={this.props.user} />
         <li key={post._id} onClick={()=>this.goToPost(post._id)}>{post.title}
           <TagList tags={post.tags} />
         </li>
@@ -22,4 +24,5 @@ export default class FeedItem extends Component {
 
 FeedItem.propTypes = {
   post: PropTypes.object.isRequired,
+  user: PropTypes.object,
 };

@@ -57,7 +57,7 @@ export default class AppPage extends Component {
         <Header as='h1'>Feed</Header>
         <LoginProfileButtonContainer user={this.props.user} />
         <AddPostButtonContainer user={this.props.user} />
-        <Feed posts={this.props.posts} />
+        <Feed posts={this.props.posts} user={this.props.user} />
       </div>
     );
   }

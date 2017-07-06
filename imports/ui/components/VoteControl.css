@@ -1,0 +1,9 @@
+.voteControl {
+  position: relative;
+}
+
+.downVote {
+  position: absolute;
+  left: 0;
+  top: 15px;
+}
