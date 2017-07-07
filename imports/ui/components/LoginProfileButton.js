@@ -19,7 +19,6 @@ export default class LoginProfileButton extends Component {
   }
 
   componentWillReceiveProps(props) {
-    console.log('meow')
     this.setState({open: this.state.open || props.externalOpenClick})
   }
 
