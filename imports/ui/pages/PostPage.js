@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import AddComment from '../components/AddComment.js'
 import CommentList from '../components/CommentList.js'
+import AppHeader from '../components/AppHeader.js'
 import VoteControlContainer from '../components/VoteControlContainer.js'
 
 export default class PostPage extends Component {
@@ -25,6 +26,7 @@ export default class PostPage extends Component {
 
     return (
       <div className="container">
+        <AppHeader user={this.props.user} />
         { output }
       </div>
       );
