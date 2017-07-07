@@ -15,7 +15,7 @@ export default class PostPage extends Component {
           <h1>{post.title}</h1>
           <h2>@{post.username}</h2>
           <p>{post.content}</p>
-          <AddComment post={post}/>
+          <AddComment post={post} user={this.props.user} />
           <CommentList comments={this.props.comments}
                        post={post}/>
         </div>

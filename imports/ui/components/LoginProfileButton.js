@@ -7,6 +7,8 @@ import { Header, Button, Icon, Modal, Image, Form, TextArea, Input } from 'seman
 import AccountsUIWrapper from '../AccountsUIWrapper.js'
 import AddPostButton from '../components/AddPostButton.js'
 
+var PubSub = require('pubsub-js')
+
 export default class LoginProfileButton extends Component {
   constructor(props) {
     super(props);
@@ -15,6 +17,9 @@ export default class LoginProfileButton extends Component {
     this.close = this.close.bind(this)
     this.logOut = this.logOut.bind(this)
     this.mySubmitFunc = this.mySubmitFunc.bind(this)
+
+    this.mySubscriber = this.mySubscriber.bind(this)
+    var token = PubSub.subscribe('login', this.mySubscriber)
 
   }
 
@@ -33,6 +38,11 @@ export default class LoginProfileButton extends Component {
 
   logOut() {
     AccountsTemplates.logout();
+  }
+
+  mySubscriber(msg) {
+    console.log(msg)
+    this.show()
   }
 
   mySubmitFunc(error, state) {

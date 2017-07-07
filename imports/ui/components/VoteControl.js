@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { Icon } from 'semantic-ui-react'
 import { Posts } from '../../api/posts/posts.js'
 import { Votes } from '../../api/votes/votes.js'
+var PubSub = require('pubsub-js')
 
 export default class VoteControl extends Component {
   constructor(props) {
@@ -12,9 +13,8 @@ export default class VoteControl extends Component {
   }
 
   vote() {
-    if (!Meteor.user()) {
-      // please login before voting
-      console.log("please login")
+    if (!this.props.user) {
+      PubSub.publish('login', 'vote');
       return
     }
 
