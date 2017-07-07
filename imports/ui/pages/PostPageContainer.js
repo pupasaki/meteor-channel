@@ -17,10 +17,12 @@ export default PostPageContainer = createContainer(({ params }) => {
     const commentsReady = commentsHandle.ready()
     const post = Posts.find({_id: id}).fetch()
     const comments = Comments.find({postId: id}).fetch()
+    const user = Meteor.user()
   return {
     postReady,
     commentsReady,
     post,
     comments,
+    user,
   };
 }, PostPage);

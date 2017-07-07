@@ -12,7 +12,7 @@ export default class FeedItem extends Component {
     var post = this.props.post
     return (
       <div className="feedItem">
-        <VoteControlContainer post={post} user={this.props.user} />
+        <VoteControlContainer post={post} user={this.props.user} size='small' />
         <li key={post._id} onClick={()=>this.goToPost(post._id)}>{post.title}
           <TagList tags={post.tags} />
         </li>

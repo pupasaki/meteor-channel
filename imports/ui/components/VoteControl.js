@@ -42,12 +42,20 @@ export default class VoteControl extends Component {
   }
 
   render() {
-    const voted = (this.props.votes.length > 0)
+    const voted = this.props.votes && this.props.votes.length > 0
+    const size = this.props.size
+    let voteCount
+    if (size == 'large') {
+      voteCount = <h3>{this.props.post.score}</h3>
+    } else {
+      voteCount = <h5>{this.props.post.score}</h5>
+    }
 
     return (
       <div className="voteControl">
-        <Icon link name='chevron up' color={voted ? 'orange' : 'black'} onClick={voted ? this.unvote : this.vote} />
-        { this.props.post.score }
+        <Icon link name='chevron up' size={size == 'large' ? 'large' : 'small'}
+          color={voted ? 'orange' : 'black'} onClick={voted ? this.unvote : this.vote} />
+        { voteCount }
       </div>
     )
   }
@@ -57,4 +65,5 @@ VoteControl.propTypes = {
   user: PropTypes.object,
   post: PropTypes.object.isRequired,
   votes: PropTypes.array,
+  size: PropTypes.string.isRequired,
 };

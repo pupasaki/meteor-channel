@@ -54,7 +54,6 @@ export default class LoginProfileButton extends Component {
         onSubmitHook: this.mySubmitFunc
     })
 
-    console.log('woof for you')
     console.log(this.props.clickFromAdd)
 
     return (

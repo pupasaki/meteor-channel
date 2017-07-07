@@ -81,4 +81,3 @@ AccountsTemplates.addField({
         return Meteor.call("userExists", value);
     },
 });
-console.log('meow 1')
