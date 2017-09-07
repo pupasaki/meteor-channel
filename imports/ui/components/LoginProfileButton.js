@@ -41,7 +41,6 @@ export default class LoginProfileButton extends Component {
   }
 
   mySubscriber(msg) {
-    console.log(msg)
     this.show()
   }
 
@@ -62,8 +61,6 @@ export default class LoginProfileButton extends Component {
     AccountsTemplates.configure({
         onSubmitHook: this.mySubmitFunc
     })
-
-    console.log(this.props.clickFromAdd)
 
     return (
       <span className="loginProfileButton">

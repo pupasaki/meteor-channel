@@ -13,10 +13,14 @@ export default class FeedItem extends Component {
     return (
       <div className="feedItem">
         <VoteControlContainer post={post} user={this.props.user} size='small' />
-        <li key={post._id} onClick={()=>this.goToPost(post._id)}>{post.title}
-          <TagList tags={post.tags} />
-        </li>
-
+        <div>
+          <li key={post._id}>
+            <span onClick={()=>this.goToPost(post._id)}>
+              {post.title}
+            </span>
+            <TagList tags={post.tags} />
+          </li>
+        </div>
       </div>
       );
   }

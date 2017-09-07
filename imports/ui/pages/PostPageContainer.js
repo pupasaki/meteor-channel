@@ -10,7 +10,6 @@ import PostPage from './PostPage.js';
 
 export default PostPageContainer = createContainer(({ params }) => {
     const { id } = params
-    console.log(id)
     const postHandle = Meteor.subscribe('post.withId', { _id: id })
     const commentsHandle = Meteor.subscribe('comments.forPost', { postId: id })
     const postReady = postHandle.ready()

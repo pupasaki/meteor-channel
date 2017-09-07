@@ -7,17 +7,25 @@ import AppHeader from '../components/AppHeader.js'
 export default class AppPage extends Component {
 
   render() {
+    console.log('the feed:')
+    console.log(this.props.feed)
 
+    let posts = []
+    if (this.props.feed[0])
+      posts = this.props.feed[0].posts
+
+    console.log('the posts:')
+    console.log(posts)
     return (
       <div className="container">
         <AppHeader user={this.props.user} />
-        <Feed posts={this.props.posts} user={this.props.user} />
+        <Feed posts={posts} user={this.props.user} />
       </div>
     );
   }
 }
 
 AppPage.propTypes = {
-  posts: PropTypes.array.isRequired,
+  feed: PropTypes.array,
   user: PropTypes.object,
 };

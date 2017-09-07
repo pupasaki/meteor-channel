@@ -51,19 +51,6 @@ form {
   position: relative;
 }
  
-.new-task input {
-  box-sizing: border-box;
-  padding: 10px 0;
-  background: transparent;
-  border: none;
-  width: 100%;
-  padding-right: 80px;
-  font-size: 1em;
-}
- 
-.new-task input:focus{
-  outline: 0;
-}
  
 ul {
   margin: 0;
@@ -104,28 +91,7 @@ li.private {
   border-color: #ddd;
 }
  
-header .hide-completed {
-  float: right;
-}
  
-.toggle-private {
-  margin-left: 5px;
-}
- 
-@media (max-width: 600px) {
-  li {
-    padding: 12px 15px;
-  }
- 
-  .search {
-    width: 150px;
-    clear: both;
-  }
- 
-  .new-task input {
-    padding-bottom: 5px;
-  }
-}
 
 .feedItem {
   display: flex;

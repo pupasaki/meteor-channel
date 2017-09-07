@@ -6,6 +6,7 @@ import { appState } from '../imports/ui/reducers'
 import { newPostClicked } from '../imports/ui/actions'
 
 import '../imports/lib/config/at_config.js' // TODO: change to accounts templaet config
+import '/imports/api/methods.js'
 
 
 Meteor.startup(() => {

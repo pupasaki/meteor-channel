@@ -1,2 +1,11 @@
-import { Mongo } from 'meteor/mongo';
-export const Comments = new Mongo.Collection('comments');
+import { Mongo } from 'meteor/mongo'
+
+
+class CommentsCollection extends Mongo.Collection {
+  insert(doc, callback) {
+    const id = super.insert(doc, callback);
+    return id
+  }
+}
+
+export const Comments = new CommentsCollection('comments');

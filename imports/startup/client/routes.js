@@ -38,6 +38,7 @@ export const renderRoutes = () => (
   <Provider store={store}>
     <Router history={browserHistory}>
         <Route path="/" component={AppContainer}/>
+        <Route path="/:tag" component={AppContainer}/>
         <Route path="post/:id" component={PostPageContainer} />
     </Router>
   </Provider>

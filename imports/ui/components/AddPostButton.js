@@ -27,9 +27,9 @@ export default class AddPostButton extends Component {
 
   handleChangeChannels(event) {
     console.log(event.key)
-    const re = /^\#[a-zA-Z0-9]* ?( \#[a-zA-Z0-9]* ?)*$/g
+    const re = /^#?[a-zA-Z0-9]* ?(#?([a-zA-Z0-9]+ ?)?)*$/g
     if (re.test(event.target.value)) {
-      this.setState({channels: event.target.value});
+      this.setState({ channels: "#" + event.target.value.replace(/#/g, '').split(' ').join(' #')})
     }
   }
 
@@ -48,13 +48,32 @@ export default class AddPostButton extends Component {
 
   post() {
     console.log(this.state.channels + " " +  this.state.post)
-    Posts.insert({
+
+    let tags
+    if (this.state.channels.slice(-1) == '#') {
+      tags = this.state.channels.slice(0, -2)
+    } else {
+      tags = this.state.channels
+    }
+
+    tags = tags.replace(/#/g, '').split(' ')
+    console.log('tags: ' + tags)
+    console.log(tags)
+
+
+    Meteor.call('addPost', {
       title: this.state.title,
       content: this.state.post,
-      tags: this.state.channels.trim().split(" "),
+      tags: tags,
       userId: this.props.user._id,
       username: this.props.user.username,
       createdAt: new Date()
+    }, (err, success) => {
+      if (err) {
+        alert(err)
+      } else {
+        console.log(success)
+      }
     })
     this.close()
   }

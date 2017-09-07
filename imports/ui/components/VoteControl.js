@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react'
 import { Icon } from 'semantic-ui-react'
 import { Posts } from '../../api/posts/posts.js'
 import { Votes } from '../../api/votes/votes.js'
