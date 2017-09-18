@@ -25,8 +25,6 @@ Meteor.publish('posts.withTag', (params) => {
   })
 
   postIds = res.hits.hits.map((hits) => { return hits._id })
-  console.log('POST IDS')
-  console.log(postIds)
 //  Feed.remove({})
   Feed.insert({postsIds: postIds})
   return Posts.find({_id: { $in: postIds }})

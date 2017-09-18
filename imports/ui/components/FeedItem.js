@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import TagList from './TagList'
 import VoteControlContainer from './VoteControlContainer'
+import { Label } from 'semantic-ui-react'
 
 export default class FeedItem extends Component {
   goToPost(id) {
@@ -9,7 +10,7 @@ export default class FeedItem extends Component {
   }
 
   render() {
-    var post = this.props.post
+    let post = this.props.post
     return (
       <div className="feedItem">
         <VoteControlContainer post={post} user={this.props.user} size='small' />
@@ -19,6 +20,7 @@ export default class FeedItem extends Component {
               {post.title}
             </span>
             <TagList tags={post.tags} />
+            <Label>{post.createdAt.toString()}</Label>
           </li>
         </div>
       </div>
