@@ -11,6 +11,3 @@ Meteor.publish('comments.forPost', function commentsForPost(params) {
   return comments
 });
 
-//Meteor.publish('posts', function posts() {
-//  return Posts.find({});
-//});
