@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react'
-import Feed from '../components/Feed.js'
+import FeedContainer from '../containers/FeedContainer.js'
 import AppHeader from '../components/AppHeader.js'
 
 
@@ -7,19 +7,17 @@ import AppHeader from '../components/AppHeader.js'
 export default class AppPage extends Component {
 
   render() {
-    console.log('the feed:')
-    console.log(this.props.feed)
+    console.log('app page')
+    let postIds = []
+    if (this.props.feed == undefined || this.props.feed.length != 0 ) {
+      console.log(this.props.feed[0].postIds)
+      postIds = this.props.feed[0].postIds
+    }
 
-    let posts = []
-    if (this.props.feed[0])
-      posts = this.props.feed[0].posts
-
-    console.log('the posts:')
-    console.log(posts)
     return (
       <div className="container">
         <AppHeader user={this.props.user} />
-        <Feed posts={posts} user={this.props.user} />
+        <FeedContainer feed={postIds} user={this.props.user} />
       </div>
     );
   }

@@ -1,5 +1,6 @@
 import { Comments } from '/imports/api/comments/comments.js'
 import { Posts } from '/imports/api/posts/posts.js'
+import { Feed } from '/imports/api/feed/feed.js'
 const elasticsearch = require('elasticsearch')
 const client = new elasticsearch.Client({
   host: 'localhost:9200',
@@ -95,17 +96,18 @@ Meteor.methods({
       })
 
       postIds = res.hits.hits.map((hits) => { return hits._id })
+      return postIds
 
-      const posts = Posts.find({_id: { $in: postIds }}).fetch()
-      const postsMap = {}
-      posts.forEach((post) => {
-        postsMap[post._id] = post
-      })
-      const orderedPosts = []
-      postIds.forEach((postId) => {
-        orderedPosts.push(postsMap[postId])
-      })
-      return orderedPosts
+//      const posts = Posts.find({_id: { $in: postIds }}).fetch()
+//      const postsMap = {}
+//      posts.forEach((post) => {
+//        postsMap[post._id] = post
+//      })
+//      const orderedPosts = []
+//      postIds.forEach((postId) => {
+//        orderedPosts.push(postsMap[postId])
+//      })
+//      return orderedPosts
     }
 
   },

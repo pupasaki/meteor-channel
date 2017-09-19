@@ -9,11 +9,40 @@ const client = new elasticsearch.Client({
   host: 'localhost:9200',
   log: 'trace'
 })
+const addToES = Meteor.wrapAsync(client.create, client)
+const esSearch = Meteor.wrapAsync(client.search, client)
+
 
 Meteor.publish('post.withId', function postWithId(params) {
   const { _id } = params;
   return Posts.find({_id: _id});
 })
+
+Meteor.publish('posts.withIds', function postWithIds(params) {
+  const { postIds } = params
+  console.log('publish with ids')
+  console.log(postIds)
+  return Posts.find({_id: { $in: postIds }})
+})
+
+
+
+//  const posts = Posts.find({_id: { $in: postIds }})
+//
+//  console.log('double woof')
+//  console.log(posts)
+//  return posts
+////  const postsMap = {}
+////  posts.forEach((post) => {
+////    postsMap[post._id] = post
+////  })
+////  const orderedPosts = []
+////  postIds.forEach((postId) => {
+////    orderedPosts.push(postsMap[postId])
+////  })
+////  return orderedPosts
+//
+//})
 
 Meteor.publish('posts.withTag', (params) => {
   const { tag } = params;

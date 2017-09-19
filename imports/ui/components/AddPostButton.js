@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import { createContainer } from 'meteor/react-meteor-data'
 import { browserHistory } from 'react-router';
 import { Posts } from '../../api/posts/posts.js'
-import Feed from '../components/Feed.js'
 import { Header, Button, Icon, Modal, Image, Form, TextArea, Input } from 'semantic-ui-react'
 
 export default class AddPostButton extends Component {

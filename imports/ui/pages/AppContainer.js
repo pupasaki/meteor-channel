@@ -9,15 +9,22 @@ import { Feed } from '/imports/api/feed/feed.js'
 export default AppContainer = createContainer(({ params }) => {
 
   const { tag } = params
-  let postsHandle
+  let postIds = []
 
-  Meteor.call('getFeed', { tag: tag }, (err, res) => {
-    Feed.upsert({_id: 'posts'}, {posts: res})
-    const feedTest = Feed.find({_id: 'posts'}).fetch()
-  })
+
+  Meteor.subscribe('getFeed', { tag })
+
+  var id = 'global'
+  if (Meteor.user()) {
+    id = Meteor.user()._id
+    console.log('here')
+    console.log(id)
+  }
+  console.log('app container')
+  console.log(id)
 
   return {
-    feed: Feed.find({_id: 'posts'}).fetch(),
+    feed: Feed.find(id).fetch(),
     user: Meteor.user(),
   }
 }, AppPage);
