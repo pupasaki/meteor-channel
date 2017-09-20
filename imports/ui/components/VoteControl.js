@@ -21,24 +21,19 @@ export default class VoteControl extends Component {
     if (!this.props.votes || this.props.votes.length < 1) {
 
       // TODO: update this to an atomic counter
-      Votes.insert({
-        userId: this.props.user._id,
+      Meteor.call('addVote', {
         postId: this.props.post._id,
-        createdAt: new Date(),
-      }, () => { Posts.update(this.props.post._id, { $inc: { score: 1 }}) })
-
-
-    } else if (this.props.votes.length > 0) {
-      // clicking should remove vote
-
+        userId: this.props.user._id,
+      })
     }
   }
 
   unvote() {
       // TODO: update this to an atomic counter
-      Votes.remove({ _id: this.props.votes[0]._id },
-                   () => { Posts.update(this.props.post._id, { $inc: { score: -1 }}) })
-
+      Meteor.call('removeVote', {
+        voteId: this.props.votes[0]._id,
+        postId: this.props.post._id,
+      })
   }
 
   render() {
