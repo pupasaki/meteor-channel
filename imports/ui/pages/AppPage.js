@@ -17,7 +17,9 @@ export default class AppPage extends Component {
     return (
       <div className="container">
         <AppHeader user={this.props.user} />
-        <FeedContainer feed={postIds} user={this.props.user} />
+        <FeedContainer feed={postIds}
+          user={this.props.user}
+          feedLimit={this.props.feedLimit} />
       </div>
     );
   }
@@ -26,4 +28,5 @@ export default class AppPage extends Component {
 AppPage.propTypes = {
   feed: PropTypes.array,
   user: PropTypes.object,
+  feedLimit: PropTypes.object,
 };

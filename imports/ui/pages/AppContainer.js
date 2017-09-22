@@ -10,6 +10,7 @@ export default AppContainer = createContainer(({ params }) => {
 
   const { tag } = params
   let postIds = []
+  let feedLimit = new ReactiveVar(25)
 
 
   Meteor.subscribe('getFeed', { tag })
@@ -17,14 +18,11 @@ export default AppContainer = createContainer(({ params }) => {
   var id = 'global'
   if (Meteor.user()) {
     id = Meteor.user()._id
-    console.log('here')
-    console.log(id)
   }
-  console.log('app container')
-  console.log(id)
 
   return {
     feed: Feed.find(id).fetch(),
     user: Meteor.user(),
+    feedLimit,
   }
 }, AppPage);

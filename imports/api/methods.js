@@ -19,7 +19,7 @@ function updateESforPost(postId) {
   console.log('update ES FOR POST')
   console.log(post)
   updateES({
-    index: 'channel',
+    index: 'posts',
     type: 'post',
     id: postId,
     body: {
@@ -39,6 +39,7 @@ Meteor.methods({
                reply: replyId,
                userId: userId,
                username: username,
+               score: 1,
                createdAt: new Date() }
 
     if (!Meteor.isServer) {
@@ -50,7 +51,7 @@ Meteor.methods({
       const commentId = Comments.insert(params)
 
       const res = addToES({
-        index: 'channel',
+        index: 'comments',
         type: 'comment',
         id: commentId,
         body: params,
@@ -86,6 +87,7 @@ Meteor.methods({
                     tags: tags,
                     userId: userId,
                     username: username,
+                    score: 1,
                     createdAt: new Date(), }
 
     if (!Meteor.isServer) {
@@ -95,7 +97,7 @@ Meteor.methods({
     } else {
       const postId = Posts.insert(params)
       const res = addToES({
-        index: 'channel',
+        index: 'posts',
         type: 'post',
         id: postId,
         body: params,
