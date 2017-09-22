@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base'
 //import { Users } from '/imports/api/users/users.js'
 import { Fake } from 'meteor/anti:fake'
+import { faker } from 'meteor/practicalmeteor:faker'
 
 const elasticsearch = require('elasticsearch')
 const client = new elasticsearch.Client({
@@ -15,19 +16,25 @@ const deleteES = Meteor.wrapAsync(client.indices.delete, client)
 const numSeedUsers = 10
 let seedUsers = []
 
-//console.log(Users.find().count)
-//
 if (Meteor.users.find().count() < numSeedUsers) {
-  for (var i = Meteor.users.find().count(); i < numSeedUsers; i++) {
-    let seedUser = Fake.user({
-      fields: ['name', 'username', 'emails.address', 'profile.name'],
-    })
-    Accounts.createUser({ username: seedUser.username,
-      email: seedUser.emails[0].address,
-      password: 'password',
-    })
+  try {
+    for (var i = Meteor.users.find().count(); i < numSeedUsers; i++) {
+      Accounts.createUser({ username: faker.internet.userName(),
+        email: faker.internet.email(),
+        password: 'password',
+      })
+    }
+  } catch (err) {
+    console.log(err)
   }
+
+  //test account
+  Accounts.createUser({ username: 'coder-cat',
+    email: 'coder-cat@meow.org',
+    password: 'password',
+  })
 }
+
 
 function getRandomUser() {
   let array = Meteor.users.find().fetch();
@@ -36,15 +43,11 @@ function getRandomUser() {
   return element
 }
 
-
-
-
-numPosts = 300
+numPosts = 500
 if (Posts.find().count() < numPosts)  {
   deleteES({
     index: 'posts',
   })
-  let randomUser = getRandomUser()
 
   let numTagsSet = 15
   let numPostTags = 5
@@ -62,6 +65,7 @@ if (Posts.find().count() < numPosts)  {
   }
 
   for (let i = Posts.find().count(); i < numPosts; i++) {
+    let randomUser = getRandomUser()
     Meteor.call('addPost', {
       title: Fake.sentence(10),
       content: Fake.sentence(100),

@@ -6,6 +6,8 @@ import VoteControlContainer from '../components/VoteControlContainer.js'
 
 export default class PostPage extends Component {
   render() {
+    console.log('post page')
+    console.log(this.props.post[0])
     let output
     if (this.props.postReady && this.props.commentsReady) {
       let post = this.props.post[0]
