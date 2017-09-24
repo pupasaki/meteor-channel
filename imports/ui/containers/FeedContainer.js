@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import { createContainer } from 'meteor/react-meteor-data'
 import { Posts } from '../../api/posts/posts.js'
 import FeedComponent from '../components/FeedComponent.js'
-import { ReactiveVar } from 'meteor/reactive-var'
 
 
 export default FeedContainer = createContainer(({ feed, user, feedLimit }) => {

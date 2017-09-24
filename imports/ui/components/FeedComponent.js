@@ -33,15 +33,25 @@ export default class FeedComponent extends Component {
   }
 
   getOrderedPosts() {
-    const orderedPosts = []
-    const postsMap = {}
-    this.props.posts.forEach((post) => {
-      postsMap[post._id] = post
-    })
+    let orderedPosts = []
+    if (this.props.feed) {
+      const postsMap = {}
+      this.props.posts.forEach((post) => {
+        postsMap[post._id] = post
+      })
 
-    this.props.feed.forEach((feedItem) => {
-      orderedPosts.push(postsMap[feedItem])
-    })
+      this.props.feed.forEach((feedItem) => {
+        orderedPosts.push(postsMap[feedItem])
+      })
+      console.log('here 1')
+    } else {
+      orderedPosts = this.props.posts
+      console.log('here 2')
+      console.log(this.props.posts)
+    }
+    console.log('ordered posts')
+    console.log(this.props.postsReady)
+    console.log(orderedPosts)
     return orderedPosts
   }
 

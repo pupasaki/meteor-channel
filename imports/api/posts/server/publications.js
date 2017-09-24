@@ -12,10 +12,9 @@ const client = new elasticsearch.Client({
 const addToES = Meteor.wrapAsync(client.create, client)
 const esSearch = Meteor.wrapAsync(client.search, client)
 
-
 Meteor.publish('post.withId', function postWithId(params) {
   const { _id } = params;
-  return Posts.find({_id: _id});
+  return Posts.find({_id: _id})
 })
 
 Meteor.publish('posts.withIds', function postWithIds(params) {
@@ -25,24 +24,14 @@ Meteor.publish('posts.withIds', function postWithIds(params) {
   return Posts.find({_id: { $in: postIds }})
 })
 
+Meteor.publish('posts.withUsername', (params) => {
+  const { username, limit } = params
+  return Posts.find({username}, {limit})
+})
 
-
-//  const posts = Posts.find({_id: { $in: postIds }})
-//
-//  console.log('double woof')
-//  console.log(posts)
-//  return posts
-////  const postsMap = {}
-////  posts.forEach((post) => {
-////    postsMap[post._id] = post
-////  })
-////  const orderedPosts = []
-////  postIds.forEach((postId) => {
-////    orderedPosts.push(postsMap[postId])
-////  })
-////  return orderedPosts
-//
-//})
+Meteor.publish('posts.withUsernameCount', (params) => {
+  const { username } = params
+})
 
 Meteor.publish('posts.withTag', (params) => {
   const { tag } = params;
@@ -54,7 +43,6 @@ Meteor.publish('posts.withTag', (params) => {
   })
 
   postIds = res.hits.hits.map((hits) => { return hits._id })
-//  Feed.remove({})
   Feed.insert({postsIds: postIds})
   return Posts.find({_id: { $in: postIds }})
 })

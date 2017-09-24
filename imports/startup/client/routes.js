@@ -7,6 +7,7 @@ import AppContainer from '../../ui/pages/AppContainer.js';
 import PostPageContainer from '../../ui/pages/PostPageContainer.js';
 import NotFoundPage from '../../ui/pages/NotFoundPage.js';
 import LoginPage from '../../ui/pages/LoginPage.js';
+import ProfilePageContainer from '/imports/ui/containers/ProfilePageContainer.js'
 
 // redux
 import { createStore, combineReducers } from 'redux'
@@ -40,6 +41,7 @@ export const renderRoutes = () => (
         <Route path="/" component={AppContainer}/>
         <Route path="/:tag" component={AppContainer}/>
         <Route path="post/:id" component={PostPageContainer} />
+        <Route path="u/:username" component={ProfilePageContainer} />
     </Router>
   </Provider>
 );
