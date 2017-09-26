@@ -106,6 +106,48 @@ Meteor.methods({
     }
 
   },
+
+  'getFeed'({ tag, start, limit }) {
+
+    if (!Meteor.isServer) return
+
+    let query =  {
+      function_score: {
+        functions: [
+          {
+            linear: {
+              createdAt: {
+                origin: new Date(),
+                scale: '60d',
+              }
+            }
+          },
+          {
+            field_value_factor: {
+              field: "score",
+              factor: 1,
+            }
+          },
+        ],
+        boost_mode: "sum",
+      },
+    }
+
+    if (tag) {
+      query['function_score']['query'] = { bool: { filter: { match: { tags: tag } } } }
+    }
+
+    const esSearch = Meteor.wrapAsync(client.search, client)
+    const res = esSearch({
+      index: 'posts',
+      from: start,
+      size: limit,
+      body: { query },
+    })
+
+    postIds = res.hits.hits.map((hits) => { return hits._id })
+    return postIds
+  },
 })
 
 

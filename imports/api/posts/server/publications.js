@@ -13,7 +13,7 @@ const addToES = Meteor.wrapAsync(client.create, client)
 const esSearch = Meteor.wrapAsync(client.search, client)
 
 Meteor.publish('post.withId', function postWithId(params) {
-  const { _id } = params;
+  const { _id } = params
   return Posts.find({_id: _id})
 })
 
@@ -25,8 +25,9 @@ Meteor.publish('posts.withIds', function postWithIds(params) {
 })
 
 Meteor.publish('posts.withUsername', (params) => {
-  const { username, limit } = params
-  return Posts.find({username}, {limit})
+  const { username, skip, limit } = params
+    console.log('skip', skip)
+  return Posts.find({username}, {skip, limit})
 })
 
 Meteor.publish('posts.withUsernameCount', (params) => {

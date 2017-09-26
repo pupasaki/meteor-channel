@@ -22,18 +22,27 @@ export default class VoteControl extends Component {
 
       // TODO: update this to an atomic counter
       Meteor.call('addVote', {
-        postId: this.props.post._id,
+        postId: this.props.post[0]._id,
         userId: this.props.user._id,
       })
+      this.props.voteChanged.set(true)
     }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.post.length == 0) {
+      return false
+    }
+    return true
   }
 
   unvote() {
       // TODO: update this to an atomic counter
       Meteor.call('removeVote', {
         voteId: this.props.votes[0]._id,
-        postId: this.props.post._id,
+        postId: this.props.post[0]._id,
       })
+      this.props.voteChanged.set(true)
   }
 
   render() {
@@ -41,9 +50,9 @@ export default class VoteControl extends Component {
     const size = this.props.size
     let voteCount
     if (size == 'large') {
-      voteCount = <h3>{this.props.post.score}</h3>
+      voteCount = <h3>{this.props.post[0].score}</h3>
     } else {
-      voteCount = <h5>{this.props.post.score}</h5>
+      voteCount = <h5>{this.props.post[0].score}</h5>
     }
 
     return (
@@ -58,7 +67,8 @@ export default class VoteControl extends Component {
 
 VoteControl.propTypes = {
   user: PropTypes.object,
-  post: PropTypes.object.isRequired,
+  post: PropTypes.array,
   votes: PropTypes.array,
   size: PropTypes.string.isRequired,
+  voteChanged: PropTypes.object,
 };

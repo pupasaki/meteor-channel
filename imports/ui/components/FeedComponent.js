@@ -7,94 +7,43 @@ import InfiniteScroll from 'react-infinite-scroller'
 export default class FeedComponent extends Component {
   constructor(props) {
     super(props);
-    this.getMore = this.getMore.bind(this)
-    this.checkIfFeedHasMore = this.checkIfFeedHasMore.bind(this)
-    this.getOrderedPosts = this.getOrderedPosts.bind(this)
-    this.hasMore = true
-    this.increment = 10
+    this.state = { posts: [], ready: false, hasMore: true  }
+    this.loadMore = this.props.loadMore.bind(this)
   }
 
-
-  goToPost(id) {
-    browserHistory.push('/post/' + id)
-  }
-
-  getMore() {
-    console.log('getting more')
-    this.props.feedLimit.set(this.newFeedLimit)
-  }
-
-  checkIfFeedHasMore() {
-    const newFeedLimit = this.props.feedLimit.get() + this.increment
-    if (newFeedLimit >= this.props.feedPageSize)
-      this.hasMore = false
-    else
-      this.newFeedLimit = newFeedLimit
-  }
-
-  getOrderedPosts() {
-    let orderedPosts = []
-    if (this.props.feed) {
-      const postsMap = {}
-      this.props.posts.forEach((post) => {
-        postsMap[post._id] = post
-      })
-
-      this.props.feed.forEach((feedItem) => {
-        orderedPosts.push(postsMap[feedItem])
-      })
-      console.log('here 1')
-    } else {
-      orderedPosts = this.props.posts
-      console.log('here 2')
-      console.log(this.props.posts)
-    }
-    console.log('ordered posts')
-    console.log(this.props.postsReady)
-    console.log(orderedPosts)
-    return orderedPosts
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    const { postsReady } = nextProps;
-    return postsReady
+  receivePosts(posts) {
+    this.setState({
+      posts: _.uniq(_.union(this.state.posts, posts), false, (item, key, _id) => { return item._id }),
+      ready: true,
+      hasMore: posts.length >= this.props.pageSize })
   }
 
   render() {
-    let orderedPosts = []
-    if (this.props.postsReady) {
-      this.checkIfFeedHasMore()
-      orderedPosts = this.getOrderedPosts()
-    }
-
-    console.log('render')
-    console.log(this.hasMore)
     return (
       <div>
       <InfiniteScroll
         pageStart={0}
-        loadMore={this.getMore}
-        initialLoad={false}
-        hasMore={this.hasMore}
+        loadMore={this.loadMore}
+        initialLoad={true}
+        hasMore={this.state.hasMore}
         loader={<div className="loader">Loading ...</div>}
       >
         <div className="feed">
           {
-          orderedPosts.map( post => (
+          this.state.posts.map( post => (
           <FeedItem key={post._id} post={post} user={this.props.user} />
           ))
           }
         </div>
       </InfiniteScroll>
 </div>
-      );
+      )
   }
 }
 
 FeedComponent.propTypes = {
-  posts: PropTypes.array,
-  feed: PropTypes.array,
   user: PropTypes.object,
-  postsReady: PropTypes.bool,
-  feedLimit: PropTypes.object,
+  data: PropTypes.object,
+  loadMore: PropTypes.func,
+  pageSize: PropTypes.number,
 };

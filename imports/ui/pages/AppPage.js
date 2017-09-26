@@ -8,18 +8,17 @@ export default class AppPage extends Component {
 
   render() {
     console.log('app page')
-    let postIds = []
-    if (this.props.feed == undefined || this.props.feed.length != 0 ) {
-      console.log(this.props.feed[0].postIds)
-      postIds = this.props.feed[0].postIds
-    }
+//    let postIds = []
+//    if (this.props.feed == undefined || this.props.feed.length != 0 ) {
+//      console.log(this.props.feed[0].postIds)
+//      postIds = this.props.feed[0].postIds
+//    }
 
     return (
       <div className="container">
         <AppHeader user={this.props.user} />
-        <FeedContainer feed={postIds}
-          user={this.props.user}
-          feedLimit={this.props.feedLimit} />
+        <FeedContainer
+          user={this.props.user} />
       </div>
     );
   }

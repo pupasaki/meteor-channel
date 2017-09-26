@@ -4,20 +4,47 @@ import { Posts } from '../../api/posts/posts.js'
 import FeedComponent from '../components/FeedComponent.js'
 
 
+const pageSize = 25
+
+function orderPosts(postIds, posts) {
+  let orderedPosts = []
+  const postsMap = {}
+  posts.forEach((post) => {
+    postsMap[post._id] = post
+  })
+
+  postIds.forEach((postId) => {
+    orderedPosts.push(postsMap[postId])
+  })
+  return orderedPosts
+}
+
+
+function loadMore() {
+
+  Meteor.call('getFeed', {start: this.state.posts.length, limit: pageSize}, (err, postIds) => {
+
+    console.log(postIds)
+
+    Meteor.subscribe('posts.withIds', { postIds },
+      { onReady: () => {
+        const posts =  Posts.find({_id: { $in: postIds }}).fetch()
+        console.log('posts', posts)
+        this.receivePosts(orderPosts(postIds, posts))
+      }},
+    )
+  })
+}
+
 export default FeedContainer = createContainer(({ feed, user, feedLimit }) => {
 
-  const limitedFeed = feed.slice(0, feedLimit.get())
-  const postsHandle = Meteor.subscribe('posts.withIds', { postIds: limitedFeed })
+//  const postsHandle = Meteor.subscribe('posts.withIds', { postIds: limitedFeed })
 
-  console.log('feed container')
-  console.log(feedLimit)
+  Meteor.subscribe('posts')
 
   return {
-    feed: limitedFeed,
-    posts: Posts.find({_id: { $in: limitedFeed }}).fetch(),
     user: user,
-    postsReady: postsHandle.ready(),
-    feedLimit,
-    feedPageSize: feed.length,
+    loadMore,
+    pageSize,
   }
 }, FeedComponent)
