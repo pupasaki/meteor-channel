@@ -3,6 +3,7 @@ import FeedComponent from '../components/FeedComponent.js'
 import { ReactiveVar } from 'meteor/reactive-var'
 
 import { Posts } from '/imports/api/posts/posts.js'
+import AppHeader from '../components/AppHeader.js'
 import _ from 'underscore'
 
 
@@ -36,12 +37,15 @@ export default class ProfilePage extends Component {
 
   render() {
     return (
+      <div className="container">
+        <AppHeader user={Meteor.user()} />
         <FeedComponent
           data={{username: this.props.params.username}}
-          user={this.props.user}
+          user={Meteor.user()}
           loadMore={this.loadMore}
           pageSize={pageSize}
         />
+      </div>
         )
   }
 }

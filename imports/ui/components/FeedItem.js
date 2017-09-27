@@ -22,6 +22,7 @@ export default class FeedItem extends Component {
             <TagList tags={post.tags} />
             <Label>{post.createdAt.toString()}</Label>
             <Label>{post._id}</Label>
+            <Label>@{post.username}</Label>
           </li>
         </div>
       </div>

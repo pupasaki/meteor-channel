@@ -24,8 +24,6 @@ function loadMore() {
 
   Meteor.call('getFeed', {start: this.state.posts.length, limit: pageSize}, (err, postIds) => {
 
-    console.log(postIds)
-
     Meteor.subscribe('posts.withIds', { postIds },
       { onReady: () => {
         const posts =  Posts.find({_id: { $in: postIds }}).fetch()
@@ -37,10 +35,6 @@ function loadMore() {
 }
 
 export default FeedContainer = createContainer(({ feed, user, feedLimit }) => {
-
-//  const postsHandle = Meteor.subscribe('posts.withIds', { postIds: limitedFeed })
-
-  Meteor.subscribe('posts')
 
   return {
     user: user,

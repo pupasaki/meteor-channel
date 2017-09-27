@@ -12,12 +12,13 @@ export default VoteControlContainer = createContainer(({ post, user, size }) => 
   if (user) {
     const votesHandle = Meteor.subscribe('votes', {userId: user._id, postId: post._id})
     votes = Votes.find({postId: post._id, userId: user._id}).fetch()
-    if (voteChanged) {
-      postHandle = Meteor.subscribe('post.withId', { _id: post._id })
-      post = Posts.find({_id: post._id}).fetch()
-    } else {
-      post = [post]
-    }
+  }
+
+  if (voteChanged) {
+    postHandle = Meteor.subscribe('post.withId', { _id: post._id })
+    post = Posts.find({_id: post._id}).fetch()
+  } else {
+    post = [post]
   }
   return {
     user,
@@ -25,7 +26,6 @@ export default VoteControlContainer = createContainer(({ post, user, size }) => 
     votes,
     size,
     voteChanged,
-    ready: postHandle.ready(),
   };
 }, VoteControl);
 

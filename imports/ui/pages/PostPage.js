@@ -1,13 +1,15 @@
 import React, { Component, PropTypes } from 'react';
+import { browserHistory } from 'react-router';
 import AddComment from '../components/AddComment.js'
 import CommentList from '../components/CommentList.js'
 import AppHeader from '../components/AppHeader.js'
 import VoteControlContainer from '../components/VoteControlContainer.js'
 
 export default class PostPage extends Component {
+  goToProfile(username) {
+    browserHistory.push('/user/' + username)
+  }
   render() {
-    console.log('post page')
-    console.log(this.props.post[0])
     let output
     if (this.props.postReady && this.props.commentsReady) {
       let post = this.props.post[0]
@@ -15,7 +17,7 @@ export default class PostPage extends Component {
         <div className="postPage">
           <VoteControlContainer post={post} user={this.props.user} size='large' />
           <h1>{post.title}</h1>
-          <h2>@{post.username}</h2>
+          <h2 onClick={()=>this.goToProfile(post.username)}>@{post.username}</h2>
           <p>{post.content}</p>
           <AddComment post={post} user={this.props.user} />
           <CommentList comments={this.props.comments}

@@ -42,7 +42,7 @@ export const renderRoutes = () => (
         <Route path="/" component={AppContainer}/>
         <Route path="/:tag" component={AppContainer}/>
         <Route path="post/:id" component={PostPageContainer} />
-        <Route path="u/:username" component={ProfilePage} />
+        <Route path="user/:username" component={ProfilePage} />
     </Router>
   </Provider>
 );
