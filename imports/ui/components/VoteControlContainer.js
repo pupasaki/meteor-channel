@@ -14,12 +14,13 @@ export default VoteControlContainer = createContainer(({ post, user, size }) => 
     votes = Votes.find({postId: post._id, userId: user._id}).fetch()
   }
 
-  if (voteChanged) {
+  if (voteChanged.get()) {
     postHandle = Meteor.subscribe('post.withId', { _id: post._id })
     post = Posts.find({_id: post._id}).fetch()
   } else {
     post = [post]
   }
+
   return {
     user,
     post,

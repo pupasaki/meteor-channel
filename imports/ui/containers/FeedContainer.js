@@ -21,18 +21,24 @@ function orderPosts(postIds, posts) {
 
 
 function loadMore() {
-
-  Meteor.call('getFeed', {start: this.state.posts.length, limit: pageSize}, (err, postIds) => {
-
-    Meteor.subscribe('posts.withIds', { postIds },
-      { onReady: () => {
-        const posts =  Posts.find({_id: { $in: postIds }}).fetch()
-        console.log('posts', posts)
-        this.receivePosts(orderPosts(postIds, posts))
-      }},
-    )
+  Meteor.call('getFeed2', {start: this.state.posts.length, limit: pageSize}, (err, postIds) => {
+    this.receivePosts(postIds)
   })
 }
+
+//function loadMore() {
+//
+//  Meteor.call('getFeed', {start: this.state.posts.length, limit: pageSize}, (err, postIds) => {
+//
+//    Meteor.subscribe('posts.withIds', { postIds },
+//      { onReady: () => {
+//        const posts =  Posts.find({_id: { $in: postIds }}).fetch()
+//        console.log('posts', posts)
+//        this.receivePosts(orderPosts(postIds, posts))
+//      }},
+//    )
+//  })
+//}
 
 export default FeedContainer = createContainer(({ feed, user, feedLimit }) => {
 

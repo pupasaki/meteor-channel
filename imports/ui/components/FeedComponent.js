@@ -9,6 +9,9 @@ export default class FeedComponent extends Component {
     super(props);
     this.state = { posts: [], ready: false, hasMore: true  }
     this.loadMore = this.props.loadMore.bind(this)
+    this.deleteFeedItem = this.deleteFeedItem.bind(this)
+    this.receivePosts = this.receivePosts.bind(this)
+    this.postsArrayIndex = {}
   }
 
   receivePosts(posts) {
@@ -16,6 +19,10 @@ export default class FeedComponent extends Component {
       posts: _.uniq(_.union(this.state.posts, posts), false, (item, key, _id) => { return item._id }),
       ready: true,
       hasMore: posts.length >= this.props.pageSize })
+  }
+
+  deleteFeedItem(id) {
+    console.log(id)
   }
 
   render() {
@@ -31,7 +38,7 @@ export default class FeedComponent extends Component {
         <div className="feed">
           {
           this.state.posts.map( post => (
-          <FeedItem key={post._id} post={post} user={this.props.user} />
+          <FeedItem key={post._id} post={post} user={this.props.user} deleteFunc={this.deleteFeedItem} />
           ))
           }
         </div>

@@ -14,18 +14,23 @@ const updateES = Meteor.wrapAsync(client.update, client)
 const esSearch = Meteor.wrapAsync(client.search, client)
 
 
-function updateESforPost(postId) {
+function updateESforPost(postId, type) {
   let post = Posts.find(postId).fetch()[0]
   console.log('update ES FOR POST')
   console.log(post)
+
+  let doc = {}
+  if (type == 'score') {
+    doc = {score: post.score}
+  } else if (type == 'delete') {
+    doc = {deleted: post.deleted}
+  }
   updateES({
     index: 'posts',
     type: 'post',
     id: postId,
     body: {
-      doc: {
-        score: post.score
-      },
+      doc
     },
   })
 }
@@ -68,7 +73,7 @@ Meteor.methods({
     })
     Posts.update(postId, { $inc: { score: 1 }})
     if (Meteor.isServer) {
-      updateESforPost(postId)
+      updateESforPost(postId, 'score')
     }
   },
 
@@ -76,7 +81,7 @@ Meteor.methods({
     Votes.remove(voteId)
     Posts.update(postId, { $inc: { score: -1 }})
     if (Meteor.isServer) {
-      updateESforPost(postId)
+      updateESforPost(postId, 'score')
     }
   },
 
@@ -107,12 +112,72 @@ Meteor.methods({
 
   },
 
+  'deletePost'({ postId }) {
+    Posts.update(postId, { $set: { deleted: true }})
+
+    if (Meteor.isServer) {
+      updateESforPost(postId, 'delete')
+    }
+  },
+
   'getFeed'({ tag, start, limit }) {
 
     if (!Meteor.isServer) return
 
     let query =  {
       function_score: {
+        functions: [
+          {
+            linear: {
+              createdAt: {
+                origin: new Date(),
+                scale: '60d',
+              }
+            }
+          },
+
+          {
+            field_value_factor: {
+              field: "score",
+              factor: 1,
+            }
+          },
+        ],
+        boost_mode: "sum",
+      },
+    }
+
+    if (tag) {
+      query['function_score']['query'] = { bool: { filter: { match: { tags: tag } } } }
+    }
+
+    const esSearch = Meteor.wrapAsync(client.search, client)
+    const res = esSearch({
+      index: 'posts',
+      from: start,
+      size: limit,
+      body: { query },
+    })
+
+    postIds = res.hits.hits.map((hits) => { return hits._id })
+    return postIds
+  },
+
+  'getFeed2'({ tag, start, limit }) {
+
+    if (!Meteor.isServer) return
+
+    let query =  {
+      function_score: {
+//        query: {
+//          bool: {
+//            filter: {
+//              match: {
+//                deleted: true
+//              },
+//            },
+//          },
+//        },
         functions: [
           {
             linear: {
@@ -146,7 +211,19 @@ Meteor.methods({
     })
 
     postIds = res.hits.hits.map((hits) => { return hits._id })
-    return postIds
+
+    const posts = Posts.find({_id: { $in: postIds }})
+
+    const orderedPosts = []
+    const postsMap = {}
+    posts.forEach((post) => {
+      postsMap[post._id] = post
+    })
+    postIds.forEach((postId) => {
+      orderedPosts.push(postsMap[postId])
+    })
+
+    return orderedPosts
   },
 })
 

@@ -2,11 +2,17 @@ import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import TagList from './TagList'
 import VoteControlContainer from './VoteControlContainer'
-import { Label } from 'semantic-ui-react'
+import { Label, Button } from 'semantic-ui-react'
 
 export default class FeedItem extends Component {
   goToPost(id) {
     browserHistory.push('/post/' + id)
+  }
+
+  deleteFunc(postId) {
+    Meteor.call('deletePost', {postId}, (err) => {
+
+    })
   }
 
   render() {
@@ -23,6 +29,7 @@ export default class FeedItem extends Component {
             <Label>{post.createdAt.toString()}</Label>
             <Label>{post._id}</Label>
             <Label>@{post.username}</Label>
+            { post.userId == this.props.user._id ? <Button onClick={()=>this.deleteFunc(post._id)}>Delete</Button> : null}
           </li>
         </div>
       </div>
@@ -33,4 +40,5 @@ export default class FeedItem extends Component {
 FeedItem.propTypes = {
   post: PropTypes.object.isRequired,
   user: PropTypes.object,
+  deleteFunc: PropTypes.func,
 };
