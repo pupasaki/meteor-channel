@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Button, Icon, Form, TextArea, Input } from 'semantic-ui-react'
 import { Comments } from '../../api/comments/comments.js'
-
-var PubSub = require('pubsub-js')
+import PubSub from 'pubsub-js'
 
 export default class AddComment extends Component {
   constructor(props) {
@@ -18,15 +17,15 @@ export default class AddComment extends Component {
 
   postComment() {
     if (!this.props.user) {
-      PubSub.publish('login', 'add comment');
+      PubSub.publish('login', 'add comment')
     } else {
       replyId = this.props.comment ? this.props.comment._id : null
       Meteor.call('addComment', {
         postId: this.props.post._id,
         body: this.state.comment,
         replyId: replyId,
-        userId: Meteor.user().id,
-        username: Meteor.user().username,
+        userId: this.props.user._id,
+        username: this.props.user.username,
       }, (err, res) => {
         if (err) {
           alert(err);
@@ -34,7 +33,11 @@ export default class AddComment extends Component {
           console.log(res)
         }
       });
-      this.state.comment = ''
+
+      if (this.props.comment)
+        PubSub.publish('replyClick', this.props.comment._id)
+
+      this.setState({comment: ''})
     }
   }
 

@@ -38,10 +38,10 @@ export default class ProfilePage extends Component {
   render() {
     return (
       <div className="container">
-        <AppHeader user={Meteor.user()} />
+        <AppHeader user={this.props.user} />
         <FeedComponent
-          data={{username: this.props.params.username}}
-          user={Meteor.user()}
+          data={{username: this.props.username}}
+          user={this.props.user}
           loadMore={this.loadMore}
           pageSize={pageSize}
         />
@@ -51,5 +51,6 @@ export default class ProfilePage extends Component {
 }
 
 ProfilePage.propTypes = {
-  params: PropTypes.object,
+  username: PropTypes.string,
+  user: PropTypes.object,
 }

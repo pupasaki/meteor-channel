@@ -21,6 +21,7 @@ export default class Comment extends Component {
       @{ this.props.comment.username }
       {!this.state.collapsed ? <CommentBody comment={this.props.comment}
                               post={this.props.post}
+                              user={this.props.user}
                               replyBox={this.props.replyBox}
                               replyClick={this.props.replyClick}
                               children={this.props.children} /> : null }
@@ -32,7 +33,8 @@ export default class Comment extends Component {
 Comment.propTypes = {
   comment: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired,
+  user: PropTypes.object,
   replyBox: PropTypes.bool.isRequired,
   replyClick: PropTypes.func.isRequired,
   children: PropTypes.array,
-};
+}

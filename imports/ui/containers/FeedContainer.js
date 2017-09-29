@@ -6,45 +6,29 @@ import FeedComponent from '../components/FeedComponent.js'
 
 const pageSize = 25
 
-function orderPosts(postIds, posts) {
-  let orderedPosts = []
-  const postsMap = {}
-  posts.forEach((post) => {
-    postsMap[post._id] = post
-  })
-
-  postIds.forEach((postId) => {
-    orderedPosts.push(postsMap[postId])
-  })
-  return orderedPosts
-}
-
-
 function loadMore() {
-  Meteor.call('getFeed2', {start: this.state.posts.length, limit: pageSize}, (err, postIds) => {
+  console.log('loading more - feed container')
+  console.log(this.state.posts.length)
+  console.log(this.props.data.tag)
+  if (this.props.data.pageType == 'subs' && _.isEmpty(this.props.data.tag)) {
+    msg = <h2>You are not following anything!</h2>
+    this.setState({empty: msg, hasMore: false})
+    return
+  }
+
+  Meteor.call('getFeed2', {tagList: this.props.data.tag ? Object.keys(this.props.data.tag) : null,
+    start: this.state.posts.length,
+    limit: pageSize}, (err, postIds) => {
     this.receivePosts(postIds)
   })
 }
 
-//function loadMore() {
-//
-//  Meteor.call('getFeed', {start: this.state.posts.length, limit: pageSize}, (err, postIds) => {
-//
-//    Meteor.subscribe('posts.withIds', { postIds },
-//      { onReady: () => {
-//        const posts =  Posts.find({_id: { $in: postIds }}).fetch()
-//        console.log('posts', posts)
-//        this.receivePosts(orderPosts(postIds, posts))
-//      }},
-//    )
-//  })
-//}
-
-export default FeedContainer = createContainer(({ feed, user, feedLimit }) => {
+export default FeedContainer = createContainer(({ pageType, tag, user }) => {
 
   return {
     user: user,
     loadMore,
     pageSize,
+    data: {tag, pageType}
   }
 }, FeedComponent)

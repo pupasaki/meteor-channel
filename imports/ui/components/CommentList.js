@@ -6,9 +6,15 @@ export default class CommentList extends Component {
     super(props);
     this.state = { commentWithReply: '' }
     this.replyClick = this.replyClick.bind(this)
+    this.replyClickSubscriber = this.replyClickSubscriber.bind(this)
     this.structure = {}
     this.commentMap = {}
     this.isCommentRendered = {}
+    PubSub.subscribe('replyClick', this.replyClickSubscriber)
+  }
+
+  replyClickSubscriber(topic, commentId) {
+    this.replyClick(commentId)
   }
 
   replyClick(commentId) {
@@ -34,6 +40,7 @@ export default class CommentList extends Component {
       key={comment._id}
       comment={comment}
       post={this.props.post}
+      user={this.props.user}
       replyBox={this.state.commentWithReply == comment._id ? true : false}
       replyClick={()=>{this.replyClick(comment._id)}}
       children={renderedChildren} />
@@ -49,7 +56,6 @@ export default class CommentList extends Component {
       this.commentMap[comment._id] = comment
     }.bind(this))
 
-
     comments.forEach(function (comment) {
       if (!this.isCommentRendered[comment._id])
         commentObjs.push(this.renderComment(comment._id))
@@ -63,10 +69,10 @@ export default class CommentList extends Component {
       </div>
       )
   }
-
 }
 
 CommentList.propTypes = {
   comments: PropTypes.array.isRequired,
   post: PropTypes.object.isRequired,
-};
+  user: PropTypes.object,
+}

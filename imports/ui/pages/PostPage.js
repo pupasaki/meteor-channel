@@ -21,7 +21,8 @@ export default class PostPage extends Component {
           <p>{post.content}</p>
           <AddComment post={post} user={this.props.user} />
           <CommentList comments={this.props.comments}
-                       post={post}/>
+                                 post={post}
+                                 user={this.props.user} />
         </div>
         )
     } else {

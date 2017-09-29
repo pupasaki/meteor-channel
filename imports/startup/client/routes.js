@@ -8,6 +8,7 @@ import PostPageContainer from '../../ui/pages/PostPageContainer.js';
 import NotFoundPage from '../../ui/pages/NotFoundPage.js';
 import LoginPage from '../../ui/pages/LoginPage.js';
 import ProfilePageContainer from '/imports/ui/containers/ProfilePageContainer.js'
+import SubsContainer from '/imports/ui/containers/SubsContainer.js'
 import ProfilePage from '/imports/ui/pages/ProfilePage.js'
 
 // redux
@@ -40,9 +41,10 @@ export const renderRoutes = () => (
   <Provider store={store}>
     <Router history={browserHistory}>
         <Route path="/" component={AppContainer}/>
-        <Route path="/:tag" component={AppContainer}/>
+        <Route path="/channel/:tag" component={AppContainer}/>
+        <Route path="/following" component={SubsContainer}/>
         <Route path="post/:id" component={PostPageContainer} />
-        <Route path="user/:username" component={ProfilePage} />
+        <Route path="user/:username" component={ProfilePageContainer} />
     </Router>
   </Provider>
 );

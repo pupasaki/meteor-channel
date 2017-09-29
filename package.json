@@ -11,6 +11,7 @@
     "meteor-node-stubs": "~0.2.0",
     "pubsub-js": "^1.5.7",
     "react": "^15.6.1",
+    "react-addons-css-transition-group": "^15.6.2",
     "react-addons-pure-render-mixin": "^15.3.2",
     "react-dom": "^15.4.1",
     "react-infinite-scroll-meteor": "^0.1.2",

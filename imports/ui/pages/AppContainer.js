@@ -6,23 +6,17 @@ import { ReactiveVar } from 'meteor/reactive-var'
 import { Feed } from '/imports/api/feed/feed.js'
 
 
-export default AppContainer = createContainer(({ params }) => {
+export default AppContainer = createContainer(({ pageType, tagList, params }) => {
 
-//  const { tag } = params
-//  let postIds = []
-//  let feedLimit = new ReactiveVar(25)
-//
-//
-//  Meteor.subscribe('getFeed', { tag })
-//
-//  var id = 'global'
-//  if (Meteor.user()) {
-//    id = Meteor.user()._id
-//  }
+  const { tag } = params
+  if (_.isString(tag)) {
+    tagList = {}
+    tagList[tag] = true
+  }
 
   return {
-//    feed: Feed.find(id).fetch(),
     user: Meteor.user(),
-//    feedLimit,
+    tag: tagList,
+    pageType,
   }
 }, AppPage);

@@ -7,13 +7,24 @@ export default class CommentBody extends Component {
     super(props);
   }
 
+  deleteComment(commentId) {
+    Meteor.call('deleteComment', {commentId}, (err, res) => {
+
+    })
+  }
+
   render() {
+    comment = this.props.comment
     return (
       <div className="commentBody">
-        { this.props.comment.body }
+        { comment.deleted ? '[deleted]' : comment.body }
         <Button onClick={this.props.replyClick}>reply</Button>
-        { this.props.replyBox ? <AddComment comment={this.props.comment}
-                                            post={this.props.post} /> : null }
+        { this.props.replyBox ? <AddComment comment={comment}
+                                            post={this.props.post}
+                                            user={this.props.user} /> : null }
+        { comment.userId == this.props.user._id ?
+        <Button onClick={()=>this.deleteComment(comment._id)}>Delete</Button>
+        : null }
         <div className="child">
           { this.props.children }
         </div>
@@ -25,6 +36,7 @@ export default class CommentBody extends Component {
 CommentBody.propTypes = {
   comment: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired,
+  user: PropTypes.object,
   replyBox: PropTypes.bool.isRequired,
   replyClick: PropTypes.func.isRequired,
   children: PropTypes.array,
