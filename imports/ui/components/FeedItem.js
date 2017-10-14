@@ -2,9 +2,15 @@ import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import TagList from './TagList'
 import VoteControlContainer from './VoteControlContainer'
-import { Label, Button } from 'semantic-ui-react'
+import { Label, Button, Dropdown, Menu } from 'semantic-ui-react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import ReportButton from './ReportButton'
+import PostMenuButton from './PostMenuButton'
+import javascriptTimeAgo from 'javascript-time-ago'
+javascriptTimeAgo.locale(require('javascript-time-ago/locales/en'))
+require('javascript-time-ago/intl-messageformat-global')
+require('intl-messageformat/dist/locale-data/en')
+const timeAgoEnglish = new javascriptTimeAgo('en-US')
+
 
 export default class FeedItem extends Component {
   constructor(props) {
@@ -34,20 +40,16 @@ export default class FeedItem extends Component {
           transitionEnterTimeout={500}
           transitionLeaveTimeout={300}>
       { this.state.deleted ? null :
-        <div>
+        <div className='feedItemBody' >
           <VoteControlContainer post={post} user={this.props.user} size='small' />
           <div>
-            <li key={post._id}>
-              <span onClick={()=>this.goToPost(post._id)}>
-                {post.title}
-              </span>
-              <TagList tags={post.tags} user={this.props.user} />
-              <Label>{post.createdAt.toString()}</Label>
-              <Label>{post._id}</Label>
-              <Label>@{post.username}</Label>
-              { (this.props.user && post.userId == this.props.user._id) ? <Button onClick={()=>this.deleteFunc(post._id)}>Delete</Button> : null}
-              <ReportButton user={this.props.user} post={this.props.post} />
-            </li>
+            <div onClick={()=>this.goToPost(post._id)}>
+              <h3>{post.title}</h3>
+            </div>
+            <TagList tags={post.tags} user={this.props.user} />
+            {timeAgoEnglish.format(post.createdAt)}
+            <div className='feedPostUsername'>@{post.username}</div>
+            <PostMenuButton user={this.props.user} post={this.props.post} deleteFunc={()=>this.deleteFunc(post._id)} />
           </div>
         </div>
         }

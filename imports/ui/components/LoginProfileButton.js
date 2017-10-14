@@ -62,7 +62,7 @@ export default class LoginProfileButton extends Component {
     })
 
     return (
-      <span className="loginProfileButton">
+      <span className="loginProfileButton" style={this.props.style} >
         { this.props.user ? <Button color='red' onClick={this.logOut}>Log out</Button> :
                             <Button color='green' onClick={this.show}>Log In</Button> }
 
@@ -78,5 +78,6 @@ LoginProfileButton.propTypes = {
   user: PropTypes.object,
   externalOpenClick: PropTypes.bool,
   handleExternalClicks: PropTypes.func,
+  style: PropTypes.object,
 };
 

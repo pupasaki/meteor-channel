@@ -79,7 +79,7 @@ export default class AddPostButton extends Component {
 
   render() {
     return (
-      <span className="AddPostButton">
+      <span className="AddPostButton" style={this.props.style}>
         <Button icon='add square' onClick={this.show} />
         <Modal dimmer='blurring' open={this.state.open} onClose={this.close}>
           <Modal.Header>Add a New Post</Modal.Header>
@@ -118,5 +118,6 @@ export default class AddPostButton extends Component {
 AddPostButton.propTypes = {
   user: PropTypes.object,
   onAddPostClick: PropTypes.func.isRequired,
+  style: PropTypes.object,
 };
 

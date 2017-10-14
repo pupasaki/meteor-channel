@@ -13,14 +13,11 @@ export default class AppPage extends Component {
     console.log(this.props.location)
     return (
       <div className="container">
-        <AppHeader user={this.props.user} />
-        <Button.Group>
-          <Button  active={this.props.pageType == 'subs' ? false : true }onClick={()=>browserHistory.push('/')}>All</Button>
-          <Button active={this.props.pageType == 'subs' ? true : false } onClick={()=>browserHistory.push('/following')}>Following</Button>
-        </Button.Group>
-
+        <AppHeader user={this.props.user} pageType={this.props.pageType} />
+        <div className="body">
         <FeedContainer
           user={this.props.user} tag={this.props.tag} pageType={this.props.pageType} />
+        </div>
       </div>
     );
   }

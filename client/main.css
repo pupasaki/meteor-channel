@@ -22,12 +22,6 @@ body {
   background: white;
 }
  
-header {
-  background: #d2edf4;
-  background-image: linear-gradient(to bottom, #232323, #ccccdd 100%);
-  padding: 20px 15px 15px 15px;
-  position: relative;
-}
  
 #login-buttons {
   display: block;
@@ -90,11 +84,78 @@ li.private {
   background: #eee;
   border-color: #ddd;
 }
- 
- 
+
+
+#header.AddPostButton {
+  float: right;
+}
+
+#header.LoginProfileButton {
+  float: right;
+}
+
+#app, .container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.body {
+  flex: 1;
+  overflow: auto;
+}
+
+.header {
+  padding-top: 20px;
+}
+
+.tag {
+  display: flex;
+}
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.feedItemBody {
+  display: flex;
+}
+
+.tag {
+  padding: 2px;
+}
+
+.voteControl {
+  padding-right: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.voteLink {
+  margin: 0 !important;
+}
+
+.tagList {
+  padding: 15px;
+}
+
+.score {
+  padding-top: 5px;
+}
 
 .feedItem {
   display: flex;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: #eee solid 1px;
 }
 
 .feed-enter {
@@ -114,3 +175,4 @@ li.private {
   opacity: 0.01;
   transition: opacity 300ms ease-in;
 }
+

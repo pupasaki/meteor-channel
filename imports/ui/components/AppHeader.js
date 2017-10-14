@@ -48,12 +48,24 @@ export default class AppHeader extends Component {
         onSubmitHook: this.mySubmitFunc
     })
 
+    console.log('appheader')
+    console.log(this.props.pageType)
+
+    const feedToggle = <Button.Group>
+          <Button  active={this.props.pageType == 'subs' ? false : true }onClick={()=>browserHistory.push('/')}>All</Button>
+          <Button active={this.props.pageType == 'subs' ? true : false } onClick={()=>browserHistory.push('/following')}>Following</Button>
+        </Button.Group>
+
 
     return (
-      <div className="header">
+      <div className="header" id="header" style={{width: '500px', overflow: "auto"}}>
         <Header as='h1' onClick={()=>{ browserHistory.push('/')} }>Channel</Header>
-        <LoginProfileButtonContainer user={this.props.user} />
-        <AddPostButtonContainer user={this.props.user} />
+        <AddPostButtonContainer user={this.props.user} style={{float: 'right'}} />
+        <LoginProfileButtonContainer user={this.props.user} style={{float: 'right'}} />
+
+        <div>
+      { this.props.pageType == 'post' ? null : feedToggle }
+        </div>
       </div>
     );
   }
@@ -61,4 +73,5 @@ export default class AppHeader extends Component {
 
 AppHeader.propTypes = {
   user: PropTypes.object,
+  pageType: PropTypes.string,
 };

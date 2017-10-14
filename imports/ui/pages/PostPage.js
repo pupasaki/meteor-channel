@@ -31,7 +31,7 @@ export default class PostPage extends Component {
 
     return (
       <div className="container">
-        <AppHeader user={this.props.user} />
+        <AppHeader user={this.props.user} pageType={'post'} />
         { output }
       </div>
       );

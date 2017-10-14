@@ -5,7 +5,8 @@ import { Posts } from '/imports/api/posts/posts.js'
 reportReasons = [{text: 'Spam', value: 'spam'},
                 {text: 'Inappropriate/Illegal Content', value: 'illegal'},
                 {text: "Other", value: 'other'},]
-export default class ReportButton extends Component {
+
+export default class PostMenuButton extends Component {
   constructor(props) {
     super(props);
     this.state = { open: false, reason: '', details: '' }
@@ -46,7 +47,12 @@ export default class ReportButton extends Component {
   render() {
     return (
       <div>
-        <Button icon='attention' onClick={this.show}></Button>
+        <Dropdown compact button icon='ellipsis horizontal'>
+          <Dropdown.Menu>
+            { (this.props.user && this.props.post.userId == this.props.user._id) ?  <Dropdown.Item onClick={this.props.deleteFunc} icon='close' text='Delete' /> : null}
+            <Dropdown.Item onClick={this.show} icon='attention' text='Report' />
+          </Dropdown.Menu>
+        </Dropdown>
         <Modal dimmer='blurring' open={this.state.open} onClose={this.close}>
           <Modal.Header>Report Post</Modal.Header>
           <Modal.Content>
@@ -76,7 +82,8 @@ export default class ReportButton extends Component {
   }
 }
 
-ReportButton.propTypes = {
+PostMenuButton.propTypes = {
   user: PropTypes.object,
   post: PropTypes.object.isRequired,
+  deleteFunc: PropTypes.func,
 };

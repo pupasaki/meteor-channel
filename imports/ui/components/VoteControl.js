@@ -49,17 +49,13 @@ export default class VoteControl extends Component {
     const voted = this.props.votes && this.props.votes.length > 0
     const size = this.props.size
     let voteCount
-    if (size == 'large') {
-      voteCount = <h3>{this.props.post[0].score}</h3>
-    } else {
-      voteCount = <h5>{this.props.post[0].score}</h5>
-    }
+    voteCount = <div className={ size == 'large' ? 'scoreLarge' : 'scoreSmall'} >{this.props.post[0].score}</div>
 
     return (
       <div className="voteControl">
-        <Icon link name='chevron up' size={size == 'large' ? 'large' : 'small'}
+        <Icon link className='voteLink' name='chevron up' size={size == 'large' ? 'large' : 'small'}
           color={voted ? 'orange' : 'black'} onClick={voted ? this.unvote : this.vote} />
-        { voteCount }
+        <div className="score">{ voteCount }</div>
       </div>
     )
   }
