@@ -30,7 +30,7 @@ export default class TagList extends Component {
           this.props.tags.map( tag => (
           <div className='tag' key={tag}>
             <Button.Group size='tiny'>
-              <Button onClick={()=>this.goToTag(tag)} key={tag}>#{tag}</Button>
+              <Button onClick={()=>this.goToTag(tag)} key={tag}>{tag}</Button>
               { (user && user.profile && user.profile.subs[tag]) ? <Button active={false} icon='close' onClick={()=>this.unsubscribe(tag)}></Button> : <Button icon='add circle' active={false} onClick={()=>this.subscribe(tag)}></Button> }
           </Button.Group>
           </div>

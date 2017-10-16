@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { browserHistory } from 'react-router';
 import TagList from './TagList'
 import VoteControlContainer from './VoteControlContainer'
-import { Label, Button, Dropdown, Menu } from 'semantic-ui-react'
+import { Icon, Label, Button, Dropdown, Menu } from 'semantic-ui-react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import PostMenuButton from './PostMenuButton'
 import javascriptTimeAgo from 'javascript-time-ago'
@@ -40,16 +40,26 @@ export default class FeedItem extends Component {
           transitionEnterTimeout={500}
           transitionLeaveTimeout={300}>
       { this.state.deleted ? null :
-        <div className='feedItemBody' >
-          <VoteControlContainer post={post} user={this.props.user} size='small' />
-          <div>
-            <div onClick={()=>this.goToPost(post._id)}>
-              <h3>{post.title}</h3>
+        <div className='feedItemContainer'>
+          <div className='feedItemBody'>
+            <VoteControlContainer post={post} user={this.props.user} size='small' />
+            <div>
+              <div className='feedItemHeader'>
+                <div className='feedItemTitle' onClick={()=>this.goToPost(post._id)}>
+                  <h3>{post.title}</h3>
+                </div>
+                <PostMenuButton user={this.props.user} post={this.props.post} deleteFunc={()=>this.deleteFunc(post._id)} />
+              </div>
+              <TagList tags={post.tags} user={this.props.user} />
+              <div className='feedItemInfo'>
+              </div>
+              <div className='feedItemFooter'>
+                <Label>#ThisTopic</Label>
+                <div className='feedPostUsername'>@{post.username}</div>
+                <Icon size='mini' name='circle' />
+                <div className='itemCreatedAt'>{timeAgoEnglish.format(post.createdAt)}</div>
+              </div>
             </div>
-            <TagList tags={post.tags} user={this.props.user} />
-            {timeAgoEnglish.format(post.createdAt)}
-            <div className='feedPostUsername'>@{post.username}</div>
-            <PostMenuButton user={this.props.user} post={this.props.post} deleteFunc={()=>this.deleteFunc(post._id)} />
           </div>
         </div>
         }

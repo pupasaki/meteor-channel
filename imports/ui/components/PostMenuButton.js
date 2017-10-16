@@ -46,8 +46,8 @@ export default class PostMenuButton extends Component {
 
   render() {
     return (
-      <div>
-        <Dropdown compact button icon='ellipsis horizontal'>
+      <div className='postMenuButton'>
+        <Dropdown icon='chevron down' >
           <Dropdown.Menu>
             { (this.props.user && this.props.post.userId == this.props.user._id) ?  <Dropdown.Item onClick={this.props.deleteFunc} icon='close' text='Delete' /> : null}
             <Dropdown.Item onClick={this.show} icon='attention' text='Report' />

@@ -58,13 +58,16 @@ export default class AppHeader extends Component {
 
 
     return (
-      <div className="header" id="header" style={{width: '500px', overflow: "auto"}}>
-        <Header as='h1' onClick={()=>{ browserHistory.push('/')} }>Channel</Header>
-        <AddPostButtonContainer user={this.props.user} style={{float: 'right'}} />
-        <LoginProfileButtonContainer user={this.props.user} style={{float: 'right'}} />
-
-        <div>
-      { this.props.pageType == 'post' ? null : feedToggle }
+      <div className="header" id="header">
+        <div style={{display: 'flex'}}>
+          <Header style={{width: '75%'}} as='h1' onClick={()=>{ browserHistory.push('/')} }>Channel</Header>
+          <div style={{display:'flex', 'flex-direction': 'row-reverse', width: '25%'}} className='headerButtons'>
+            <AddPostButtonContainer user={this.props.user} />
+            <LoginProfileButtonContainer user={this.props.user} />
+          </div>
+        </div>
+        <div className='feedToggle'>
+          { this.props.pageType == 'post' ? null : feedToggle }
         </div>
       </div>
     );

@@ -85,15 +85,6 @@ li.private {
   border-color: #ddd;
 }
 
-
-#header.AddPostButton {
-  float: right;
-}
-
-#header.LoginProfileButton {
-  float: right;
-}
-
 #app, .container {
   display: flex;
   flex-direction: column;
@@ -101,13 +92,9 @@ li.private {
 }
 
 .body {
-  flex: 1;
-  overflow: auto;
+  margin-top: 120px;
 }
 
-.header {
-  padding-top: 20px;
-}
 
 .tag {
   display: flex;
@@ -120,6 +107,11 @@ li.private {
 
 .feedItemBody {
   display: flex;
+}
+
+.feedItemContainer {
+  display: flex;
+  flex-direction: column;
 }
 
 .tag {
@@ -143,20 +135,86 @@ li.private {
   margin: 0 !important;
 }
 
+.postMenuButton {
+  display: flex;
+  flex-direction: row-reverse;
+  flex-basis: 25%;
+}
+
+#header {
+  max-width: 600px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  position: fixed;
+  height: 120px;
+  width: 100%;
+  z-index: 1;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.feedToggle {
+  justify-content: center;
+  display: flex;
+}
+
+
+.feedItemHeader {
+  display: flex;
+}
+
+.feedItemTitle {
+  width: 75%;
+}
+
+.feedItemFooter {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
 .tagList {
   padding: 15px;
 }
+
+
+/*
+.headerButtons {
+  display:'flex'; 
+  flex-direction: 'row-reverse';
+}
+*/
 
 .score {
   padding-top: 5px;
 }
 
+.feedPostUsername {
+  padding-right: 5px;
+}
+
 .feedItem {
   display: flex;
+  flex-direction: column;
   padding-top: 15px;
   padding-bottom: 15px;
   border-bottom: #eee solid 1px;
 }
+
+.feedItemInfo {
+  display: flex;
+  font-size: 16px;
+  align-items: center;
+}
+
+.itemCreatedAt {
+  padding-right: 2px;
+
+}
+
+
+/* delete post animation */
 
 .feed-enter {
   opacity: 0.01;
